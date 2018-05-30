@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript">
+		let add = (a, b)=>{
+			return new Promise((resolve, reject)=>{
+				setTimeout(()=>{
+					if(typeof a != 'number' || typeof b != 'number') 
+						return reject(new Error('not a number'));
+					resolve(a + b);
+				}, 2000)
+			})
+		}
+		//let aPromise = Promise.resolve(4);
+		//let aPromise = Promise.resolve(add(2, '8'));
+		let aPromise = Promise.resolve(add(2, 8));
+		aPromise.then(res=>console.log(res), err=>console.log(err + ''));
+		console.log(aPromise);
+		//kết quả trả về của resolve là 1 promise.
+		//khi resolve 1 giá trị. thì resolve trả về 1 promise với status là resolved và giá trị là giá trị đã resolve
+		//khi resolve 1 promise khác. thì resolve trả về 1 promise với status là pending và giá trị là undefined.
+		//vì nó là 1 promise nên ta hoàn toàn có thể .then() để handle nó. 
+
+		rPr = Promise.reject(new Error('bi loi'));
+		rPr.catch(err=>console.log('Error:' + err));
+		console.log(rPr);
+		//reject tương tự resolve. nhưng không reject 1 promise khác nên đơn giản hơn.
+	</script>
+</head>
+<body>
+Trần Tuyến
+</body>
+</html>
