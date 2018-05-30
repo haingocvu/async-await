@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		let add = (a, b)=>{
+			return new Promise((resolve, reject)=>{
+				setTimeout(()=>{
+					if(typeof a != 'number' || typeof b != 'number') 
+						return reject(new Error('not a number'));
+					resolve(a + b);
+				}, 2000)
+			})
+		}
+		let promise = add(2, 8)
+		.then(res=> {
+			console.log('then 1 thanh cong');
+			return 'thanh cong: ' + res;
+		}, err=>{
+			console.log('then 1 bi loi');
+			return 'bi loi: ' + err;
+		})
+		.then((res)=>{
+			console.log('result: ' + res)
+			return res;
+		});
+		console.log(promise);
+		setTimeout(()=>console.log(promise), 2500);
+		//khi promise chua ket thuc. no co status la pending va value la undefined
+		//khi promise hoan thanh. no co status la reject hoac resolve. value la tham so trong reject hoac resolve
+
+		//then thứ 1 trả về 1 promise với status là resolved bất chấp là vào function handle lỗi hay handle kết quả. giá trị của promise trả về là giá trị trả về của function handle tương ứng của then().
+
+		//vì then() thứ 1 trả về 1 promise có status là resolved nên ta chỉ cần viết handle cho trường hợp resolve ở then thứ 2.
+		//tham số nhận vào ở then() thứ 2 là kết quả trả về ở then thứ 1 (trong handle resolve hoặc reject)
+		//cứ thế cho then() thứ 3, 4, ...đều trả về promise có status là resolved vì thế t chỉ cần handle resolve. k cần handle reject.
+
+		//chính vì then() khi đầy đủ 2 handle resolve và reject thì đều trả về promise với status là resole. cho nên mới phát sinh là khi ta handle reject ở then() thì nó vẫn chạy vào then() tiếp theo (chạy vào handle resolve ở then() tiếp theo). cho nên người ta mới phải catch lại error bằng cách chỉ handle resolved ở then(), sau đó dùng catch() để handle error riêng biệt.
+	</script>
+</head>
+<body>
+
+</body>
+</html>
